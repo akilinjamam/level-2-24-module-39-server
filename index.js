@@ -14,10 +14,7 @@ app.use(express.json());
 
 // MongoDB Connection URL
 const uri = process.env.MONGODB_URI;
-const client = new MongoClient(uri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+const client = new MongoClient(uri);
 
 async function run() {
   try {
@@ -76,7 +73,7 @@ async function run() {
 
       // Generate JWT token
       const token = jwt.sign(
-        { email: user.email, role: user.role },
+        { email: user.email, role: user.role, password: user.password },
         process.env.JWT_SECRET,
         {
           expiresIn: process.env.EXPIRES_IN,
